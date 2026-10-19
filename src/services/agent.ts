@@ -10,9 +10,13 @@ export const getAgentIndex = async (locale: Locales) => {
     ? AGENT_MARKET_URL
     : `${AGENT_MARKET_URL}/index.${normalizeLocale(locale)}.json`;
 
+  // 自前配布では全言語ぶんの索引を置かないので、無ければ基底URLへフォールバックする
   const res = await fetch(url);
+  if (res.ok) return res.json();
 
-  return res.json();
+  const fallback = await fetch(AGENT_MARKET_URL);
+
+  return fallback.json();
 };
 
 export const getAgentDetail = async (id: string, locale: Locales) => {
@@ -20,7 +24,8 @@ export const getAgentDetail = async (id: string, locale: Locales) => {
     ? `${AGENT_MARKET_URL}/${id}.json`
     : `${AGENT_MARKET_URL}/${id}.${normalizeLocale(locale)}.json`;
 
-  const res = await fetch(url);
+  let res = await fetch(url);
+  if (!res.ok) res = await fetch(`${AGENT_MARKET_URL}/${id}.json`);
 
   return res.json();
 };
