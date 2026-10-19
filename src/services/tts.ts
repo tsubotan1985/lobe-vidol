@@ -43,9 +43,32 @@ export const speechApi = async (tts: TTS) => {
       console.error('TTS error', error);
       throw new Error(t('ttsTransformFailed', { ns: 'error' }));
     }
-  } else {
-    throw new Error('TTS engine not supported');
   }
+
+  if (engine === 'local') {
+    const payload = {
+      message: message || '',
+      pitch,
+      speed,
+      voice,
+    };
+
+    const res = await fetch('/api/voice/local', {
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
+
+    if (res.status !== 200) {
+      throw new Error(t('ttsTransformFailed', { ns: 'error' }));
+    }
+
+    return await res.arrayBuffer();
+  }
+
+  throw new Error('TTS engine not supported');
 };
 
 const getVoiceKey = (engine: TTS_ENGINE) => {

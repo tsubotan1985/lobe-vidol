@@ -1,4 +1,4 @@
-export type TTS_ENGINE = 'microsoft' | 'edge';
+export type TTS_ENGINE = 'microsoft' | 'edge' | 'local';
 
 // TODO: 需要根据不同 API 进行适配
 export const talkStyles = ['talk', 'happy', 'sad', 'angry', 'fear', 'surprised'] as const;

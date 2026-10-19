@@ -23,7 +23,11 @@ export default memo<Props>((props) => {
       value={engine}
       options={[
         {
-          label: 'Edge',
+          label: 'AivisSpeech (Local)',
+          value: 'local',
+        },
+        {
+          label: 'Edge (Cloud)',
           value: 'edge',
         },
       ]}

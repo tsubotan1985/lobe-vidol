@@ -10,20 +10,21 @@ export const MIN_TTS_SPEED = 0;
 export const TTS_PITCH_STEP = 0.01;
 export const TTS_SPEED_STEP = 0.01;
 
+// 既定は日本語（AivisSpeech ローカル）。話者IDは AIVIS_SPEECH_SPEAKER で上書きできる。
 export const DEFAULT_TTS_CONFIG_FEMALE: TTS = {
-  engine: 'edge',
-  locale: 'zh-CN',
+  engine: 'local',
+  locale: 'ja-JP',
   pitch: DEFAULT_TTS_PITCH,
   speed: DEFAULT_TTS_SPEED,
-  voice: 'zh-CN-XiaoxiaoNeural',
+  voice: '888753760',
 };
 
 export const DEFAULT_TTS_CONFIG_MALE: TTS = {
-  engine: 'edge',
-  locale: 'zh-CN',
+  engine: 'local',
+  locale: 'ja-JP',
   pitch: DEFAULT_TTS_PITCH,
   speed: DEFAULT_TTS_SPEED,
-  voice: 'zh-CN-YunxiNeural',
+  voice: '888753760',
 };
 
 export const supportedLocales = [
