@@ -275,12 +275,12 @@ const RomanceCarousel = ({ items, onEmojiClick, onSelect }: RomanceCarouselProps
         <div className={styles.leftSection}>
           <Flexbox gap={24}>
             <div className={styles.titleGroup}>
-              <div className={styles.subtitle}>Are you...</div>
-              <h2 className={styles.title}>Looking for romance?</h2>
+              <div className={styles.subtitle}>だれと話しますか</div>
+              <h2 className={styles.title}>キャラクターを選ぶ</h2>
             </div>
             <div className={styles.reactions}>
               <Button type="primary" onClick={onEmojiClick} size="large">
-                👻 试下手气
+                🎲 おまかせで選ぶ
               </Button>
             </div>
           </Flexbox>

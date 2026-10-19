@@ -1,6 +1,7 @@
 import { normalizeLocale, supportLocales } from '@/locales/resources';
 
-export const DEFAULT_LANG = 'zh-CN';
+// 社内フォークの既定は日本語。表示言語は設定画面で切替できる（副系は英語）。
+export const DEFAULT_LANG = 'ja-JP';
 export const LOBE_LOCALE_COOKIE = 'LOBE_LOCALE';
 
 /**

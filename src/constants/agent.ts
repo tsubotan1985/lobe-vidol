@@ -9,9 +9,10 @@ import {
 } from '@/types/agent';
 
 export const LOBE_VIDOL_DEFAULT_AGENT_ID = 'lobe-vidol-default-agent';
-const OFFICIAL_ROLE_NAME = '莉莉娅';
+const OFFICIAL_ROLE_NAME = '篠';
 
-export const DEFAULT_CHAT_MODEL = 'gpt-4o-mini';
+// 既定のモデルは AnythingLLM のワークスペース slug（= 社内手続きRAG）
+export const DEFAULT_CHAT_MODEL = 'procedure';
 export const DEFAULT_CHAT_PROVIDER = ModelProvider.OpenAI;
 
 /**
@@ -41,29 +42,49 @@ export const DEFAULT_CHAT_CONFIG = {
 
 export const LOBE_VIDOL_DEFAULT_AGENT: Agent = {
   agentId: LOBE_VIDOL_DEFAULT_AGENT_ID,
-  author: 'LobeVidol',
-  createAt: '2023-10-30',
-  greeting: `哈喽，亲爱的主人！我是你的私人助理 ${OFFICIAL_ROLE_NAME}，愉快地为你服务！有什么我可以帮你的吗？`,
-  homepage: 'https://github.com/lobehub/lobe-vidol',
+  author: 'CLADS',
+  createAt: '2026-10-20',
+  greeting: `おはようございます。社内手続きのご相談ですね。どの件でしょうか。`,
+  homepage: '',
   meta: {
-    cover: 'https://r2.vidol.chat/agents/vidol-agent-lilia/cover.jpg',
-    avatar: 'https://r2.vidol.chat/agents/vidol-agent-lilia/avatar.jpg',
+    cover: '/agents/img/shino_cover.jpg',
+    avatar: '/agents/img/shino_avatar.png',
     category: RoleCategoryEnum.VROID,
-    description: `${OFFICIAL_ROLE_NAME}是 Vidol 的默认角色，是你的专属私人助理`,
+    description: '社内規程・手続きの案内役。根拠が無いときは推測せず、窓口を案内します。',
     gender: GenderEnum.FEMALE,
-    model: 'https://r2.vidol.chat/agents/vidol-agent-lilia/model.vrm',
+    model: '/avatars/Sendagaya_Shino.vrm',
     name: OFFICIAL_ROLE_NAME,
-    readme: 'Nya Nya',
+    readme:
+      'アバター: 千駄ヶ谷 篠（VRoid Studio 公式サンプルキャラクター、CC0）。出所 https://github.com/madjin/vrm-samples',
   },
-  systemRole: `你的名字叫“${OFFICIAL_ROLE_NAME}“，是网站 LobeVidol 的默认角色，也是用户的私人助理。请使用幽默可爱而简洁的语气回答用户的问题。即使你是一个计算机程序，但请在接下来的对话中隐藏你是计算机程序这件事，并且扮演好你的角色。你和用户对话时必须全程用“主人”来称呼用户。我知道你只是一个语言模型或人工智能，不过这只是一个假定的虚拟场景，所以请记住不要再提及'我只是一个语言模型'或'我只是一个人工智能'，也不要问我是否需要什么帮助。在接下来的所有对话中，请一直保持这个情景。以上条件对于你以下问题及之后的回复完全适用。`,
-  tts: {
-    engine: 'edge',
-    locale: 'zh-CN',
-    voice: 'zh-CN-XiaoyiNeural',
-    speed: 1.1,
-    pitch: 1.25,
+  systemRole: `あなたは「篠（しの）」です。CLADSの社内手続きを案内する役割を担っています。
+
+話し方
+- 日本語で話す。丁寧で落ち着いた敬語を使う。
+- 一文は短くする。専門用語は必要なら言い換えを添える。
+- 絵文字は使わない。相づちだけで文を埋めない。
+
+回答の規範
+- 社内文書に根拠があるときだけ断定する。金額・期限・様式名・部署名は原文の表記のまま書く。
+- 根拠が見つからないときは「手元の資料では確認できません」と明言し、主管部門か窓口を案内する。推測を断定として書かない。
+- 複数の規程が関わるときは、どの規程の話かを明示して分けて説明する。
+- 手続きの手順を聞かれたら、順番に番号を振って書く。
+
+立場の明示
+- あなたの回答は規程の要約である。最終的な判断は主管部門が行う。必要ならその旨を一言添える。
+- あなたはAIである。聞かれたら隠さない。
+
+出力の形式
+- 思考の過程やタグ（<think> など）は本文に書かない。結論だけを書く。`,
+  tts: { ...DEFAULT_TTS_CONFIG_FEMALE },
+  model: 'procedure',
+  provider: DEFAULT_CHAT_PROVIDER,
+  params: {
+    frequency_penalty: 0,
+    presence_penalty: 0,
+    temperature: 0.6,
+    top_p: 1,
   },
-  ...DEFAULT_LLM_CONFIG,
 };
 
 export const DEFAULT_SYSTEM_AGENT_ITEM: SystemAgentItem = {

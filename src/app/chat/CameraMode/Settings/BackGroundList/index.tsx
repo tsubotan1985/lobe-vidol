@@ -16,9 +16,9 @@ const useStyles = createStyles(({ css, token }) => ({
     width: 100%;
     height: 100%;
     padding: 0 ${token.paddingSM}px;
+    border-radius: ${token.borderRadius}px;
 
     background-color: rgba(255, 255, 255, 2%);
-    border-radius: ${token.borderRadius}px;
   `,
 }));
 
@@ -44,7 +44,7 @@ const BackgroundList = ({ className, style }: BackgroundListProps) => {
       const url = await fetchBackgroundUrl(id);
       setBackgroundUrl(url);
     } catch {
-      message.error('背景图片下载失败');
+      message.error('背景画像の取得に失敗しました');
     }
   };
 

@@ -1,12 +1,8 @@
 'use client';
 
 import { useTheme } from 'antd-style';
-import Link from 'next/link';
 import { memo } from 'react';
-import { Trans } from 'react-i18next';
 import { Center } from 'react-layout-kit';
-
-import { MORE_MODEL_PROVIDER_REQUEST_URL } from '@/constants/url';
 
 const Footer = memo(() => {
   const theme = useTheme();
@@ -20,13 +16,7 @@ const Footer = memo(() => {
       }}
     >
       <div style={{ color: theme.colorTextSecondary, fontSize: 12, textAlign: 'center' }}>
-        <Trans i18nKey="llm.waitingForMore" ns={'setting'}>
-          更多模型正在
-          <Link aria-label={'todo'} href={MORE_MODEL_PROVIDER_REQUEST_URL} target="_blank">
-            计划接入
-          </Link>
-          中 ，敬请期待
-        </Trans>
+        利用できるモデルは社内のLLM基盤で管理しています。追加の希望は情報システム担当へご連絡ください。
       </div>
     </Center>
   );
