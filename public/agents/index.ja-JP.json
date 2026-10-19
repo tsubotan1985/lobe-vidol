@@ -1,0 +1,18 @@
+{
+  "agents": [
+    {
+      "agentId": "shino-procedure",
+      "author": "CLADS",
+      "homepage": "",
+      "createAt": "2026-10-20",
+      "meta": {
+        "name": "篠（社内手続き案内）",
+        "avatar": "/agents/img/shino_avatar.png",
+        "cover": "/agents/img/shino_cover.jpg",
+        "category": "社内",
+        "description": "社内規程・手続きの案内役。根拠が無いときは推測せず、窓口を案内します。"
+      }
+    }
+  ],
+  "schemaVersion": 1
+}

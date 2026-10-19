@@ -1,4 +1,6 @@
-export const AGENT_MARKET_URL = 'https://vidol-market.lobehub.com/agents';
+// 社内では NEXT_PUBLIC_AGENT_MARKET_URL で自前のロール配布先を指す。
+// 未設定なら同梱の public/agents を使う（既定で外部マーケットへは出ない）。
+export const AGENT_MARKET_URL = process.env.NEXT_PUBLIC_AGENT_MARKET_URL || '/agents';
 
 export const DANCE_INDEX_URL = 'https://vidol-market.lobehub.com/dances/index.json';
 
