@@ -18,6 +18,7 @@ import { ChatStreamPayload } from '@/types/provider/chat';
 import { ExpressionType } from '@/types/touch';
 import { createErrorResponse } from '@/utils/errorResponse';
 import { FetchSSEOptions, fetchSSE } from '@/utils/fetch';
+import { createThinkFilter } from '@/utils/thinkFilter';
 
 import { createHeaderWithAuth, getProviderAuthPayload } from './_auth';
 
@@ -234,6 +235,7 @@ export const chatCompletion = async (
   });
 
   const providerConfig = DEFAULT_MODEL_PROVIDER_LIST.find((item) => item.id === provider);
+  const thinkFilter = createThinkFilter();
 
   return fetchSSE(`/api/chat/${provider}`, {
     body: JSON.stringify(payload),
@@ -243,7 +245,16 @@ export const chatCompletion = async (
     onAbort: options?.onAbort,
     onErrorHandle: options?.onErrorHandle,
     onFinish: options?.onFinish,
-    onMessageHandle: options?.onMessageHandle,
+    onMessageHandle: async (chunk) => {
+      // 推論モデルの <think> ブロックは本文に出さない
+      if (chunk?.type === 'text') {
+        const text = thinkFilter.filter(chunk.text ?? '');
+        if (!text) return;
+        return options?.onMessageHandle?.({ ...chunk, text });
+      }
+
+      return options?.onMessageHandle?.(chunk);
+    },
     signal,
     // use smoothing when enable client fetch
     // https://github.com/lobehub/lobe-chat/issues/3800
