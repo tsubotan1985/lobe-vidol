@@ -1,7 +1,7 @@
-// default language
+// i18n のフォールバック言語（英語）。アプリ既定は src/constants/locale.ts の ja-JP。
 export const DEFAULT_LANG = 'en-US';
-// locale cookie
-export const LOBE_LOCALE_COOKIE = 'LOBE_LOCALE';
+// 表示言語の cookie。サーバ側（src/constants/locale.ts）と同じ名前にする。
+export const LOBE_LOCALE_COOKIE = 'CLADS_LOCALE';
 // cookie cache days
 export const COOKIE_CACHE_DAYS = 30;
 // debug mode

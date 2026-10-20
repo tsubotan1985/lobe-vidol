@@ -65,18 +65,18 @@ const AgentList = (props: AgentListProps) => {
   };
 
   // 定义分类选项
+  // 表示は日本語で固定（翻訳リソースの読み込み順に左右されないようにする）
   const CATEGORIES = [
-    { key: 'all', label: t('category.all') },
-    { label: t('category.game'), key: RoleCategoryEnum.GAME },
-    { label: t('category.vroid'), key: RoleCategoryEnum.VROID },
-    { label: t('category.anime'), key: RoleCategoryEnum.ANIME },
-    { label: t('category.animal'), key: RoleCategoryEnum.ANIMAL },
-    { label: t('category.book'), key: RoleCategoryEnum.BOOK },
-    { label: t('category.history'), key: RoleCategoryEnum.HISTORY },
-    { label: t('category.movie'), key: RoleCategoryEnum.MOVIE },
-    { label: t('category.realistic'), key: RoleCategoryEnum.REALISTIC },
-
-    { label: t('category.vtuber'), key: RoleCategoryEnum.VTUBER },
+    { key: 'all', label: 'すべて' },
+    { label: 'ゲーム', key: RoleCategoryEnum.GAME },
+    { label: 'Vroid', key: RoleCategoryEnum.VROID },
+    { label: 'アニメ', key: RoleCategoryEnum.ANIME },
+    { label: '動物', key: RoleCategoryEnum.ANIMAL },
+    { label: '書籍', key: RoleCategoryEnum.BOOK },
+    { label: '歴史', key: RoleCategoryEnum.HISTORY },
+    { label: '映画', key: RoleCategoryEnum.MOVIE },
+    { label: '現実的', key: RoleCategoryEnum.REALISTIC },
+    { label: 'VTuber', key: RoleCategoryEnum.VTUBER },
   ];
 
   // 添加状态管理

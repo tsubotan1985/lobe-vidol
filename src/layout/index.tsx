@@ -1,10 +1,9 @@
 import { PrimaryColors } from '@lobehub/ui';
 import { ThemeAppearance } from 'antd-style';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
-import { resolveAcceptLanguage } from 'resolve-accept-language';
 
-import { LOBE_LOCALE_COOKIE } from '@/constants/locale';
+import { DEFAULT_LANG, LOBE_LOCALE_COOKIE } from '@/constants/locale';
 import {
   VIDOL_THEME_APPEARANCE,
   VIDOL_THEME_NEUTRAL_COLOR,
@@ -13,7 +12,6 @@ import {
 import AppTheme from '@/layout/AppTheme';
 import StoreHydration from '@/layout/StoreHydration';
 import StyleRegistry from '@/layout/StyleRegistry';
-import { locales } from '@/locales/resources';
 import { getAntdLocale } from '@/utils/locale';
 
 import Locale from './Locale';
@@ -25,14 +23,9 @@ export interface LayoutProps {
 }
 
 const parserFallbackLang = () => {
-  // @ts-ignore
-  let fallbackLang: string = resolveAcceptLanguage(
-    headers().get('accept-language') || '',
-    locales,
-    'en-US',
-  );
-
-  return fallbackLang;
+  // ブラウザの Accept-Language には追従せず、アプリ既定（日本語）を使う。
+  // 英語にしたい場合は設定画面で切り替え、その値が cookie に入る。
+  return DEFAULT_LANG;
 };
 
 const Layout = async (props: LayoutProps) => {

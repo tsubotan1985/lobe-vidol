@@ -9,6 +9,7 @@ import {
   LOBE_LOCALE_COOKIE,
   getDebugConfig,
 } from '@/constants/i18n';
+import { DEFAULT_LANG as APP_DEFAULT_LANG } from '@/constants/locale';
 import { normalizeLocale } from '@/locales/resources';
 import { isDev, isOnServerSide } from '@/utils/env';
 
@@ -32,7 +33,9 @@ export const createI18nNext = (lang?: string) => {
         debug: debugMode,
         ns: ['error', 'common', 'chat', 'welcome', 'role'],
         detection: {
-          caches: ['cookie'],
+          // ブラウザの言語ではなく、保存された選択 → サーバが描いた言語 の順で決める（既定は日本語）
+          order: ['cookie', 'htmlTag'],
+          caches: [],
           cookieMinutes: 60 * 24 * COOKIE_CACHE_DAYS,
           cookieOptions: {
             sameSite: 'lax',
@@ -43,7 +46,8 @@ export const createI18nNext = (lang?: string) => {
         interpolation: {
           escapeValue: false,
         },
-        lng: lang,
+        // 指定が無ければアプリ既定（日本語）。ブラウザ言語には追従しない。
+        lng: lang || APP_DEFAULT_LANG,
       }),
     instance,
   };
