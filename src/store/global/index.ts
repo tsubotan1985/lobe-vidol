@@ -49,8 +49,9 @@ export interface GlobalStore {
 const initialState = {
   viewer,
   themeMode: 'auto' as ThemeMode,
-  chatMode: 'chat' as ChatMode,
-  voiceOn: false,
+  // 3Dキャラを前面に出す（camera=3Dビュー、chat=テキスト中心）
+  chatMode: 'camera' as ChatMode,
+  voiceOn: true,
   isPlaying: false,
   showChatSidebar: false,
   showAgentInfo: true,

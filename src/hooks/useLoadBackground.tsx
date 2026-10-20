@@ -8,16 +8,19 @@ import { cacheStorage } from '@/utils/storage';
 
 const getBackgroundUrlById = (backgroundId: string) => {
   const background = backgroundOptions.find((item) => item.id === backgroundId);
-  return background
-    ? `https://r2.vidol.chat/backgrounds/${encodeURIComponent(background.url)}`
-    : undefined;
+  if (!background) return undefined;
+  // ローカル配信のパスはそのまま使う（外部CDNへは出ない）
+  return background.url.startsWith('/')
+    ? background.url
+    : `https://r2.vidol.chat/backgrounds/${encodeURIComponent(background.url)}`;
 };
 
 const getBackgroundThumbById = (backgroundId: string) => {
   const background = backgroundOptions.find((item) => item.id === backgroundId);
-  return background
-    ? `https://r2.vidol.chat/backgrounds/${encodeURIComponent(background.thumbnail)}`
-    : undefined;
+  if (!background) return undefined;
+  return background.thumbnail.startsWith('/')
+    ? background.thumbnail
+    : `https://r2.vidol.chat/backgrounds/${encodeURIComponent(background.thumbnail)}`;
 };
 
 export const useLoadBackground = () => {

@@ -29,6 +29,7 @@ export class MotionController {
   }
 
   public async preloadMotionUrl(fileType: MotionFileType, url: string) {
+    if (!url) return;
     if (!this.preloadedMotions.has(url)) {
       const clip = await this.loadMotionClip(fileType, url);
       if (clip) {

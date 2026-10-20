@@ -22,5 +22,7 @@ WORKDIR /app
 COPY --from=build /app/public ./public
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
+# 実行時に fs で読む翻訳ファイルは standalone に含まれないので明示的にコピーする
+COPY --from=build /app/locales ./locales
 EXPOSE 3210
 CMD ["node", "server.js"]

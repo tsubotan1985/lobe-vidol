@@ -231,7 +231,8 @@ export class Viewer {
 
     // 相机初始化
     this._camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
-    this._camera.position.set(0, 1.5, 2.0);
+    // 全身が入るように少し引く（従来は 2.0 で胸から上だけだった）
+    this._camera.position.set(0, 1.5, 2.6);
 
     // camera 控制 - 添加一些限制
     this._cameraControls = new OrbitControls(this._camera, this._renderer.domElement);
@@ -388,8 +389,12 @@ export class Viewer {
 
     if (chestNode) {
       const chestWPos = chestNode.getWorldPosition(new THREE.Vector3());
-      this._camera?.position.set(this._camera.position.x, chestWPos.y, this._camera.position.z);
-      this._cameraControls?.target.set(chestWPos.x, chestWPos.y, chestWPos.z);
+      this._camera?.position.set(
+        this._camera.position.x,
+        chestWPos.y - 0.1,
+        this._camera.position.z,
+      );
+      this._cameraControls?.target.set(chestWPos.x, chestWPos.y - 0.15, chestWPos.z);
       this._cameraControls?.update();
     }
   }

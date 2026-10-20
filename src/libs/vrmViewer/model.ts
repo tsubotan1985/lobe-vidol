@@ -29,6 +29,9 @@ export class Model {
   private _headHitbox?: THREE.Mesh;
   private _headHitboxSize: THREE.Vector3 = new THREE.Vector3(0.2, 0.25, 0.2);
   private _raycaster: THREE.Raycaster;
+  /** 素の姿勢はTポーズなので、腕を下ろした立ち姿に補正する */
+  private _restPoseApplied: boolean = false;
+  private _idleTime: number = 0;
 
   constructor(lookAtTargetParent: THREE.Object3D) {
     this._lookAtTargetParent = lookAtTargetParent;
@@ -62,6 +65,9 @@ export class Model {
 
     // 在这里调用 createHeadHitbox
     this.createHeadHitbox();
+
+    this._restPoseApplied = false;
+    this.applyRestPose();
   }
 
   public unLoadVrm() {
@@ -116,8 +122,77 @@ export class Model {
     }
     // 更新表情动作
     this.emoteController?.update(delta);
+    // 待機モーション（外部アセットに依存しない自前の呼吸＋腕下ろし）
+    this.updateIdle(delta);
     // 更新头部点击区域
     this.updateHeadHitbox();
+  }
+
+  /**
+   * 腕を下ろして自然な立ち姿にする（VRMの素の姿勢はTポーズ）
+   * ボーンのワールド方向を下向きに倒すだけなので、モデルの向きに依存しない
+   */
+  private applyRestPose() {
+    if (!this.vrm || this._restPoseApplied) return;
+
+    // 上腕→前腕→手の順に下向きへ揃えると、肘が曲がらず自然に垂れる
+    this.lowerArm(VRMHumanBoneName.LeftUpperArm, VRMHumanBoneName.LeftLowerArm);
+    this.lowerArm(VRMHumanBoneName.LeftLowerArm, VRMHumanBoneName.LeftHand);
+    this.lowerArm(VRMHumanBoneName.RightUpperArm, VRMHumanBoneName.RightLowerArm);
+    this.lowerArm(VRMHumanBoneName.RightLowerArm, VRMHumanBoneName.RightHand);
+
+    this._restPoseApplied = true;
+  }
+
+  private lowerArm(upperName: VRMHumanBoneName, lowerName: VRMHumanBoneName, amount = 4.2) {
+    const upper = this.vrm?.humanoid.getNormalizedBoneNode(upperName);
+    const lower = this.vrm?.humanoid.getNormalizedBoneNode(lowerName);
+    if (!upper || !lower || !upper.parent) return;
+
+    upper.updateWorldMatrix(true, false);
+    lower.updateWorldMatrix(true, false);
+
+    const from = upper.getWorldPosition(new THREE.Vector3());
+    const to = lower.getWorldPosition(new THREE.Vector3());
+    const dir = to.sub(from).normalize();
+    const want = dir
+      .clone()
+      .add(new THREE.Vector3(0, -amount, 0))
+      .normalize();
+
+    const swing = new THREE.Quaternion().setFromUnitVectors(dir, want);
+    const parentWorld = upper.parent.getWorldQuaternion(new THREE.Quaternion());
+    const parentWorldInv = parentWorld.clone().invert();
+
+    // localQ' = inv(parentWorld) * swing * parentWorld * localQ
+    const next = parentWorldInv
+      .clone()
+      .multiply(swing)
+      .multiply(parentWorld)
+      .multiply(upper.quaternion);
+
+    upper.quaternion.copy(next);
+    upper.updateWorldMatrix(true, true);
+  }
+
+  /** 呼吸とわずかな揺れ。外部のモーションファイルを使わない */
+  private updateIdle(delta: number) {
+    if (!this.vrm) return;
+
+    this.applyRestPose();
+
+    this._idleTime += delta;
+
+    const chest = this.vrm.humanoid.getNormalizedBoneNode(VRMHumanBoneName.Chest);
+    if (chest) {
+      chest.rotation.x = Math.sin(this._idleTime * 1.5) * 0.015;
+      chest.rotation.z = Math.sin(this._idleTime * 0.7) * 0.01;
+    }
+
+    const hips = this.vrm.humanoid.getNormalizedBoneNode(VRMHumanBoneName.Hips);
+    if (hips) {
+      hips.position.y = Math.sin(this._idleTime * 1.5) * 0.002;
+    }
   }
 
   public async preloadMotion(motion: MotionPresetName) {

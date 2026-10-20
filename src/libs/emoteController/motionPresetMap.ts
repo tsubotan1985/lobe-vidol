@@ -29,88 +29,89 @@ export const motionPresetMap: Record<
   }
 > = {
   idle: {
-    url: 'https://r2.vidol.chat/vmd/stand.vmd',
+    // 外部モーションは配信停止しているため使わない（待機はmodel.tsの自前モーション）
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Stand',
   },
   female_happy: {
-    url: 'https://r2.vidol.chat/animations/c9c98a38-b96c-11e4-a802-0aaa78deedf9.fbx',
+    url: '',
     type: MotionFileType.FBX,
     name: 'Female/Happy',
   },
   male_happy: {
-    url: 'https://r2.vidol.chat/animations/c9ccf37e-b96c-11e4-a802-0aaa78deedf9.fbx',
+    url: '',
     type: MotionFileType.FBX,
     name: 'Male/Happy',
   },
   female_angry: {
-    url: 'https://r2.vidol.chat/animations/c9c98b02-b96c-11e4-a802-0aaa78deedf9.fbx',
+    url: '',
     type: MotionFileType.FBX,
     name: 'Female/Angry',
   },
   male_angry: {
-    url: 'https://r2.vidol.chat/animations/c9c916ce-b96c-11e4-a802-0aaa78deedf9.fbx',
+    url: '',
     type: MotionFileType.FBX,
     name: 'Male/Angry',
   },
   female_greeting: {
-    url: 'https://r2.vidol.chat/animations/c9c7996a-b96c-11e4-a802-0aaa78deedf9.fbx',
+    url: '',
     type: MotionFileType.FBX,
     name: 'Female/Greeting',
   },
   female_appeal: {
-    url: 'https://r2.vidol.chat/vmd/camera_appeal02.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Appeal',
   },
   // 新增的配置
   female_cover_undies: {
-    url: 'https://r2.vidol.chat/vmd/_cover_undies_blush.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Cover Undies',
   },
   female_kiss: {
-    url: 'https://r2.vidol.chat/vmd/_kiss2_blush_v02.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Kiss',
   },
   number_meter_1: {
-    url: 'https://r2.vidol.chat/vmd/_number_meter_1.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Number Meter 1',
   },
   number_meter_2: {
-    url: 'https://r2.vidol.chat/vmd/_number_meter_2.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Number Meter 2',
   },
   number_meter_3: {
-    url: 'https://r2.vidol.chat/vmd/_number_meter_3.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Number Meter 3',
   },
   number_meter_4: {
-    url: 'https://r2.vidol.chat/vmd/_number_meter_4.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Number Meter 4',
   },
   number_meter_5: {
-    url: 'https://r2.vidol.chat/vmd/_number_meter_5.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Number Meter 5',
   },
   female_cover_chest: {
-    url: 'https://r2.vidol.chat/vmd/cover_chest_v02.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Cover Chest',
   },
   female_stand: {
-    url: 'https://r2.vidol.chat/vmd/stand.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Stand',
   },
   female_stand_mix: {
-    url: 'https://r2.vidol.chat/vmd/standmix2_modified.vmd',
+    url: '',
     type: MotionFileType.VMD,
     name: 'Female/Stand Mix',
   },
