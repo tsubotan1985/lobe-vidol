@@ -13,9 +13,14 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
+# 実行用: standalone 出力だけを載せる（node_modules を丸ごと入れない）
 FROM base AS runtime
 ENV NODE_ENV=production
 ENV PORT=3210
-COPY --from=build /app ./
+ENV HOSTNAME=0.0.0.0
+WORKDIR /app
+COPY --from=build /app/public ./public
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
 EXPOSE 3210
-CMD ["npx", "next", "start", "-p", "3210"]
+CMD ["node", "server.js"]

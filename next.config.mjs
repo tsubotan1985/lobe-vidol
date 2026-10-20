@@ -9,6 +9,8 @@ const withBundleAnalyzer = analyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Docker 用に最小構成を出す（.next/standalone）
+  output: 'standalone',
   compress: isProd,
   pageExtensions: ['tsx', 'ts'],
   experimental: {
