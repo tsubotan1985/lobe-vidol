@@ -13,8 +13,6 @@ import { HeaderNavKey } from '@/layout/type';
 
 import Avatar from './Actions/Avatar';
 import Documentation from './Actions/Documentation';
-import Github from './Actions/Github';
-import Support from './Actions/Support';
 
 const NavBar = () => {
   const router = useRouter();
@@ -64,8 +62,6 @@ const NavBar = () => {
     () => [
       <Flexbox key="actions" gap={8}>
         <Documentation key="doc" />
-        <Github key="github" />
-        <Support key="support" />
       </Flexbox>,
     ],
     [],

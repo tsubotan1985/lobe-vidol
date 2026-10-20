@@ -24,6 +24,9 @@ export const deleteLocalDance = async (agentId: string) => {
  * 请求线上 Dance index
  */
 export const getDanceIndex = async (url: string = DANCE_INDEX_URL) => {
+  // 外部マーケットへは接続しない
+  if (!url) return { dances: [], version: 0 };
+
   const res = await fetch(url);
 
   return res.json();

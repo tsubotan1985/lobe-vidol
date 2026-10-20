@@ -53,6 +53,8 @@ const AppTheme = memo((props: AppThemeProps) => {
 
   return (
     <ThemeProvider
+      // npmmirror の webfont CSS を読みに行かせない（フォントは自前で持つ）
+      enableCustomFonts={false}
       customTheme={{
         primaryColor: primaryColor ?? defaultPrimaryColor,
         neutralColor: neutralColor ?? defaultNeutralColor,

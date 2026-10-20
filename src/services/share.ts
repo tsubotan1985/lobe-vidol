@@ -1,33 +1,15 @@
 import { ShareGPTConversation } from '@/types/share';
-import { parseMarkdown } from '@/utils/parseMarkdown';
 
-export const SHARE_GPT_URL = 'https://sharegpt.com/api/conversations';
-
+/**
+ * 会話の外部共有は無効化している。
+ * 以前は sharegpt.com へ会話全文をPOSTしていた（社内利用では不要かつ情報漏えいの恐れ）。
+ * UI からは共有ボタンを外してあり、ここに来ても送信はしない。
+ */
 class ShareService {
-  public async createShareGPTUrl(conversation: ShareGPTConversation) {
-    const items = [];
+  public async createShareGPTUrl(conversation: ShareGPTConversation): Promise<string> {
+    void conversation; // 送信しない（引数は型合わせのみ）
 
-    for (const item of conversation.items) {
-      items.push({
-        from: item.from,
-        value: item.from === 'gpt' ? await parseMarkdown(item.value) : item.value,
-      });
-    }
-
-    const res = await fetch(SHARE_GPT_URL, {
-      body: JSON.stringify({ ...conversation, items }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    });
-
-    const { id } = await res.json();
-
-    if (!id) throw new Error('Failed to create ShareGPT URL');
-
-    // short link to the ShareGPT post
-    return `https://shareg.pt/${id}`;
+    throw new Error('外部への共有は無効化されています');
   }
 }
 

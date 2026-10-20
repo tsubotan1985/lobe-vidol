@@ -6,7 +6,8 @@ import { ChatStreamPayload } from '@/types/provider/chat';
 
 import { initAgentRuntimeWithUserPayload } from '../agentRuntime';
 
-export const runtime = 'edge';
+// Edge だと .env.local が実行時に読めず、鍵や接続先が効かない。Node で動かす。
+export const runtime = 'nodejs';
 
 export const POST = checkAuth(async (req: Request, { params, jwtPayload, createRuntime }) => {
   const { provider } = params;
